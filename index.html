@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smurfs Lanches & Cia | Guaíba</title>
+    
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --azul-smurf: #1fa2e6;
+            --vermelho-smurf: #e3000f;
+            --amarelo-smurf: #ffde00;
+            --texto-claro: #ffffff;
+            --fundo-geral: #e9ecef; 
+            --fundo-vitrine: #eceff1;
+            --texto-escuro: #111111; 
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body { 
+            background-color: var(--fundo-geral); 
+            color: var(--texto-escuro); 
+            -webkit-text-stroke: 0.3px currentColor; 
+            text-shadow: 0px 0px 1px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        /* Barra Superior */
+        .top-bar {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+        }
+        .top-bar-left { display: flex; align-items: center; gap: 15px; }
+        .top-bar-left img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
+        .top-bar-title h2 { font-size: 1.1rem; color: var(--texto-escuro); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stars { color: #ffc107; font-size: 0.85rem; margin-top: 2px; -webkit-text-stroke: 0; }
+        .stars span { color: #555; font-size: 0.75rem; margin-left: 5px; font-weight: 600; }
+        .top-bar-right { display: flex; align-items: center; gap: 20px; }
+        .top-bar-right a.icon-ig { color: var(--texto-escuro); font-size: 1.5rem; text-decoration: none; transition: color 0.2s; }
+        .top-bar-right a.icon-ig:hover { color: #e1306c; }
+        .btn-contato-top { background-color: var(--texto-escuro); color: white; padding: 8px 24px; border-radius: 5px; text-decoration: none; font-weight: 800; font-size: 0.85rem; transition: background 0.2s; }
+        .btn-contato-top:hover { background-color: #000; }
+
+        @media (max-width: 600px) {
+            .top-bar { padding: 12px 15px; flex-direction: column; gap: 10px; }
+            .top-bar-right { width: 100%; justify-content: space-between; }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: var(--azul-smurf);
+            padding: 40px 20px;
+            border-bottom: 8px solid var(--vermelho-smurf);
+        }
+        .hero img.logo-principal { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; margin-bottom: 25px; border: 6px solid white; box-shadow: 0px 8px 15px rgba(0,0,0,0.2); }
+        .hero h1 { font-size: 2.6rem; margin-bottom: 15px; color: var(--amarelo-smurf); -webkit-text-stroke: 1px rgba(0,0,0,0.6); text-shadow: 3px 3px 6px rgba(0,0,0,0.6); text-transform: uppercase; font-weight: 900; }
+        .hero p { font-size: 1.25rem; margin-bottom: 35px; color: var(--texto-claro); font-weight: 700; -webkit-text-stroke: 0.5px rgba(0,0,0,0.4); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn { display: flex; align-items: center; gap: 10px; padding: 14px 28px; font-size: 1.1rem; font-weight: 800; text-decoration: none; color: white; border-radius: 8px; transition: transform 0.2s, filter 0.2s; border: 2px solid transparent; -webkit-text-stroke: 0.4px rgba(0,0,0,0.3); text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        .btn-pedido { background-color: var(--vermelho-smurf); box-shadow: 0 6px 15px rgba(227, 0, 15, 0.4); border-color: white; }
+        .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-wa { background-color: #25D366; }
+
+        /* Vitrine com Imagens (Efeito Zoom) */
+        .vitrine { padding: 80px 20px; text-align: center; background-color: var(--fundo-vitrine); }
+        .vitrine h2 { color: var(--azul-smurf); margin-bottom: 5px; font-size: 2.2rem; text-transform: uppercase; font-weight: 900; -webkit-text-stroke: 0.5px rgba(0,0,0,0.1); }
+        .subtitulo-vitrine { color: #555; font-size: 1.15rem; margin-bottom: 40px; font-weight: 600; -webkit-text-stroke: 0; }
+        .grid-lanches { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto; }
+        
+        .card { 
+            background-color: var(--texto-claro); 
+            padding: 20px; 
+            border-radius: 12px; 
+            border-bottom: 4px solid var(--amarelo-smurf);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; 
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        .img-container { overflow: hidden; border-radius: 8px; margin-bottom: 15px; border: 2px solid var(--fundo-geral); background-color: var(--fundo-vitrine); }
+        .card img { width: 100%; height: 180px; object-fit: cover; transition: transform 0.4s ease; }
+        .card:hover img { transform: scale(1.08); }
+        .card h3 { color: var(--vermelho-smurf); margin-bottom: 8px; font-size: 1.35rem; font-weight: 800; }
+        .card p { font-size: 0.95rem; color: #444; }
+
+        /* Diferenciais (Espaço e Tele) */
+        .diferenciais {
+            background-color: var(--azul-smurf);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 4px solid var(--amarelo-smurf);
+            border-bottom: 8px solid var(--vermelho-smurf);
+        }
+        .grid-diferenciais { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto; }
+        .card-dif { background: rgba(255, 255, 255, 0.1); padding: 30px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
+        .card-dif i { font-size: 2.8rem; color: var(--amarelo-smurf); margin-bottom: 15px; -webkit-text-stroke: 0; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }
+        .card-dif h3 { font-size: 1.4rem; margin-bottom: 10px; -webkit-text-stroke: 0.5px rgba(0,0,0,0.3); text-transform: uppercase; }
+        .card-dif p { font-size: 1.05rem; line-height: 1.5; -webkit-text-stroke: 0.3px rgba(0,0,0,0.1); }
+
+        /* Localização e Status */
+        .localizacao { padding: 60px 20px; text-align: center; background-color: var(--fundo-geral); }
+        
+        .status-container { margin-bottom: 25px; }
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: white; -webkit-text-stroke: 0.3px rgba(0,0,0,0.2); }
+        .aberto { background-color: #28a745; border: 2px solid #1e7e34; }
+        .fechado { background-color: #6c757d; border: 2px solid #495057; }
+        
+        /* Alerta Dinâmico (Timer) */
+        .alerta-horario {
+            font-weight: 900;
+            font-size: 1.05rem;
+            margin-top: 5px; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulsarAlerta 2s infinite;
+            -webkit-text-stroke: 0.3px rgba(0,0,0,0.1);
+            font-variant-numeric: tabular-nums; 
+        }
+        @keyframes pulsarAlerta {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .mapa-container { border: 4px solid var(--azul-smurf); border-radius: 12px; overflow: hidden; max-width: 800px; margin: 20px auto; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        
+        /* Botão Como Chegar */
+        .btn-rota {
+            background-color: var(--azul-smurf);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            -webkit-text-stroke: 0.3px rgba(0,0,0,0.2);
+        }
+        .btn-rota:hover { background-color: #178abf; transform: translateY(-3px); }
+
+        /* Botão Flutuante do WhatsApp */
+        .whatsapp-flutuante {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            -webkit-text-stroke: 0;
+        }
+        .whatsapp-flutuante:hover { transform: scale(1.1); background-color: #20b858; }
+
+        /* Rodapé */
+        footer { background-color: var(--azul-smurf); text-align: center; padding: 40px 20px; color: white; border-top: 4px solid var(--amarelo-smurf); -webkit-text-stroke: 0.3px rgba(0,0,0,0.3); }
+        .horarios { font-size: 15px; opacity: 0.95; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <img src="img/logo.jpg" alt="Smurfs Lanches Logo">
+            <div class="top-bar-title">
+                <h2>Smurfs Lanches</h2>
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    <span>4,4 (319 AVALIAÇÕES)</span>
+                </div>
+            </div>
+        </div>
+        <div class="top-bar-right">
+            <a href="https://www.instagram.com/smurfs.lanches_guaiba/" target="_blank" class="icon-ig"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/5551998537535" target="_blank" class="btn-contato-top">CONTATO</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="img/logo.jpg" alt="Logo Smurfs Lanches" class="logo-principal">
+        <h1>O melhor lanche de Guaíba!</h1>
+        <p>A melhor experiência em lanches. Peça de onde estiver!</p>
+        
+        <div class="hero-buttons">
+            <a href="http://app.anota.ai/SMURFSLANCHESECIA" target="_blank" class="btn btn-pedido">
+                <i class="fas fa-motorcycle"></i> FAZER PEDIDO
+            </a>
+            <a href="https://wa.me/5551998537535" target="_blank" class="btn btn-wa">
+                <i class="fab fa-whatsapp"></i> WHATSAPP
+            </a>
+            <a href="https://www.instagram.com/smurfs.lanches_guaiba/" target="_blank" class="btn btn-ig">
+                <i class="fab fa-instagram"></i> INSTAGRAM
+            </a>
+        </div>
+    </section>
+
+    <section class="vitrine">
+        <h2>O Que Sai da Nossa Chapa</h2>
+        <p class="subtitulo-vitrine">Confira nossos destaques... e muito mais!</p>
+        
+        <div class="grid-lanches">
+            <div class="card">
+                <div class="img-container"><img src="img/combo.png" alt="Combos Smurf"></div>
+                <h3>Combos Smurf</h3>
+                <p>A união perfeita de sabor para matar sua fome.</p>
+            </div>
+            <div class="card">
+                <div class="img-container"><img src="img/xis.png" alt="Xis Tradicional"></div>
+                <h3>Xis Tradicional</h3>
+                <p>O clássico gaúcho, gigante e muito recheado.</p>
+            </div>
+            <div class="card">
+                <div class="img-container"><img src="img/dogao.png" alt="Dogão Prensado"></div>
+                <h3>Dogão Prensado</h3>
+                <p>Prensado no capricho com muito queijo derretido.</p>
+            </div>
+            <div class="card">
+                <div class="img-container"><img src="img/picadao.png" alt="Picadão"></div>
+                <h3>Picadão</h3>
+                <p>A porção ideal para compartilhar com a galera.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="diferenciais">
+        <div class="grid-diferenciais">
+            <div class="card-dif">
+                <i class="fas fa-store"></i>
+                <h3>Consumo no Local</h3>
+                <p>Possuímos um ambiente familiar com mesas e cadeiras para você aproveitar seu lanche quente, recém saído da chapa, com total conforto.</p>
+            </div>
+            <div class="card-dif">
+                <i class="fas fa-motorcycle"></i>
+                <h3>Tele para toda Guaíba</h3>
+                <p>Bateu a fome em casa? Nossa equipe de entrega garante que o seu pedido chegue rápido e com a qualidade de sempre em qualquer bairro.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="localizacao">
+        <div class="status-container">
+            <div id="status-loja" class="status-badge fechado"><i class="fas fa-clock"></i> Verificando status...</div>
+            <p id="alerta-horario" class="alerta-horario" style="display: none;"></p>
+        </div>
+        
+        <h2 style="color: var(--azul-smurf); margin-bottom: 10px; font-weight: 900; text-transform: uppercase;">Venha nos visitar</h2>
+        <p style="margin-bottom: 30px; font-weight: bold; font-size: 1.1rem; color: #333;">R. São Geraldo, 979 - Ermo, Guaíba - RS</p>
+        
+        <div class="mapa-container">
+            <iframe src="https://maps.google.com/maps?q=R.%20S%C3%A3o%20Geraldo,%20979,%20Ermo,%20Gua%C3%ADba%20-%20RS&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        
+        <a href="https://www.google.com/maps/dir/?api=1&destination=R.+S%C3%A3o+Geraldo,+979+-+Ermo,+Gua%C3%ADba+-+RS" target="_blank" class="btn-rota">
+            <i class="fas fa-map-marked-alt"></i> COMO CHEGAR
+        </a>
+    </section>
+
+    <footer>
+        <div class="horarios">
+            <strong>Nossos Horários (Pedidos Online):</strong><br>
+            Quarta: 18:26 às 23:29<br>
+            Quinta e Domingo: 18:30 às 23:29<br>
+            Sexta e Sábado: 18:30 às 23:58<br>
+            Segunda e Terça: Fechado
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5551998537535" target="_blank" class="whatsapp-flutuante">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        function verificarStatusFuncionamento() {
+            const agora = new Date();
+            const diaSemana = agora.getDay(); // 0: Dom, 1: Seg, 2: Ter...
+            
+            const badgeStatus = document.getElementById('status-loja');
+            const alertaHorario = document.getElementById('alerta-horario');
+            
+            let estaAberto = false;
+            let mensagemAlerta = "";
+
+            // Mapeamento dos novos horários fornecidos
+            const horarios = {
+                0: { abreH: 18, abreM: 30, fechaH: 23, fechaM: 29 }, // Domingo
+                3: { abreH: 18, abreM: 26, fechaH: 23, fechaM: 29 }, // Quarta
+                4: { abreH: 18, abreM: 30, fechaH: 23, fechaM: 29 }, // Quinta
+                5: { abreH: 18, abreM: 30, fechaH: 23, fechaM: 58 }, // Sexta
+                6: { abreH: 18, abreM: 30, fechaH: 23, fechaM: 58 }  // Sábado
+            };
+
+            const configHoje = horarios[diaSemana];
+
+            // Se existir configuração para o dia de hoje (exclui segundas e terças implicitamente)
+            if (configHoje) {
+                const abertura = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate(), configHoje.abreH, configHoje.abreM, 0);
+                const fechamento = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate(), configHoje.fechaH, configHoje.fechaM, 0);
+
+                const trintaMinutosMs = 30 * 60 * 1000;
+
+                // Verifica se está aberto
+                if (agora >= abertura && agora < fechamento) {
+                    estaAberto = true;
+                }
+
+                // Verifica Timer de Abertura (30 min antes)
+                if (agora >= (abertura.getTime() - trintaMinutosMs) && agora < abertura) {
+                    const diff = abertura - agora;
+                    const min = Math.floor(diff / 60000).toString().padStart(2, '0');
+                    const seg = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+                    mensagemAlerta = `<i class="fas fa-bell"></i> Vamos abrir em: ${min}m${seg}s`;
+                } 
+                // Verifica Timer de Fechamento (30 min antes)
+                else if (agora >= (fechamento.getTime() - trintaMinutosMs) && agora < fechamento) {
+                    const diff = fechamento - agora;
+                    const min = Math.floor(diff / 60000).toString().padStart(2, '0');
+                    const seg = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+                    mensagemAlerta = `<i class="fas fa-exclamation-triangle"></i> Vamos fechar em: ${min}m${seg}s`;
+                }
+            }
+
+            // Atualiza o Selo
+            if (estaAberto) {
+                badgeStatus.innerHTML = '<i class="fas fa-check-circle"></i> Aberto Agora! Faça seu pedido';
+                badgeStatus.className = 'status-badge aberto';
+            } else {
+                badgeStatus.innerHTML = '<i class="fas fa-times-circle"></i> Fechado no momento';
+                badgeStatus.className = 'status-badge fechado';
+            }
+
+            // Atualiza o Alerta (Timer)
+            if (mensagemAlerta !== "") {
+                alertaHorario.innerHTML = mensagemAlerta;
+                alertaHorario.style.display = 'block';
+                
+                if (estaAberto) {
+                    alertaHorario.style.color = '#e3000f'; // Vermelho p/ Fechamento
+                } else {
+                    alertaHorario.style.color = '#1fa2e6'; // Azul p/ Abertura
+                }
+            } else {
+                alertaHorario.style.display = 'none';
+            }
+        }
+
+        // Inicia o relógio
+        verificarStatusFuncionamento();
+        setInterval(verificarStatusFuncionamento, 1000);
+    </script>
+</body>
+</html>
